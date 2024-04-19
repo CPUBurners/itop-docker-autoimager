@@ -3,8 +3,8 @@ FROM ubuntu:20.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Paris
-ENV ITOP_URL=https://kumisystems.dl.sourceforge.net/project/itop/itop/2.7.10/iTop-2.7.10-12681.zip
-ENV PHP_VERSION=7.4
+ARG ITOP_URL=https://kumisystems.dl.sourceforge.net/project/itop/itop/2.7.10/iTop-2.7.10-12681.zip
+ARG PHP_VERSION=7.4
 
 # Install required packages
 RUN apt-get update -y
