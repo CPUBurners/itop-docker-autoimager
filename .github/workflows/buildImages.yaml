@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: Oracle-Alex
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
