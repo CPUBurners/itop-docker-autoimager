@@ -1,12 +1,12 @@
 {
     "iTops": [
         {
-            "name": "iTop-3.1.1-1-12561",
+            "name": "itop-3.1.1-1-12561",
             "downloadUrl": "https://kumisystems.dl.sourceforge.net/project/itop/itop/3.1.1-1/iTop-3.1.1-1-12561.zip",
             "phpVersion": "8"
         },
         {
-            "name": "iTop-3.1.0-2-11973",
+            "name": "itop-3.1.0-2-11973",
             "downloadUrl": "https://deac-ams.dl.sourceforge.net/project/itop/itop/3.1.0-2/iTop-3.1.0-2-11973.zip",
             "phpVersion": "8"
 

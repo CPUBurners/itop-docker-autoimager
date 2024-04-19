@@ -36,7 +36,7 @@ jobs:
           cp Dockerfile $DIR_NAME/Dockerfile
           sed -i "s|ARG ITOP_URL=.*|ARG ITOP_URL=$DOWNLOAD_URL|" $DIR_NAME/Dockerfile
           sed -i "s|ENV PHP_VERSION=.*|ENV PHP_VERSION=$PHP_VERSION|" $DIR_NAME/Dockerfile
-          docker buildx build --push --tag yourdockerhubuser/$ITOP_NAME:latest $DIR_NAME
+          docker buildx build --push --tag ${{ secrets.DOCKERHUB_USERNAME }}/$ITOP_NAME:latest $DIR_NAME
         done
       shell: bash
 
