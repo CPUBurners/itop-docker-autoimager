@@ -1,0 +1,44 @@
+name: Build and Push iTop Docker Images
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'itop-list.json'
+      - 'Dockerfile'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Read iTop Versions and Build Images
+      run: |
+        mkdir -p dockerfiles
+        jq -c '.iTops[]' itop-list.json | while read i; do
+          ITOP_NAME=$(echo $i | jq -r '.name')
+          DOWNLOAD_URL=$(echo $i | jq -r '.downloadUrl')
+          PHP_VERSION=$(echo $i | jq -r '.phpVersion')
+          DIR_NAME="dockerfiles/$ITOP_NAME"
+          mkdir -p $DIR_NAME
+          cp Dockerfile $DIR_NAME/Dockerfile
+          sed -i "s|ARG ITOP_URL=.*|ARG ITOP_URL=$DOWNLOAD_URL|" $DIR_NAME/Dockerfile
+          sed -i "s|ENV PHP_VERSION=.*|ENV PHP_VERSION=$PHP_VERSION|" $DIR_NAME/Dockerfile
+          docker buildx build --push --tag yourdockerhubuser/$ITOP_NAME:latest $DIR_NAME
+        done
+      shell: bash
+
+    - name: Clean up
+      run: rm -rf dockerfiles
