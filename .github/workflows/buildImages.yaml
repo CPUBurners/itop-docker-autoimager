@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest
+    runs-on: Oracle-Alex
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
@@ -37,17 +37,7 @@ jobs:
           cp Dockerfile $DIR_NAME/Dockerfile
           sed -i "s|ARG ITOP_URL=.*|ARG ITOP_URL=$DOWNLOAD_URL|" $DIR_NAME/Dockerfile
           sed -i "s|ARG PHP_VERSION=.*|ARG PHP_VERSION=$PHP_VERSION|" $DIR_NAME/Dockerfile
-
-          # Calcul du hash du Dockerfile
-          DOCKERFILE_HASH=$(sha256sum $DIR_NAME/Dockerfile | cut -d ' ' -f 1)
-          IMAGE_NAME="alxfrst/itop:$VERSION_TAG-$DOCKERFILE_HASH"
-
-          # Vérification si l'image existe déjà avec ce hash
-          if docker pull $IMAGE_NAME; then
-            echo "Image already exists with the same configuration, skipping build and push."
-          else
-            docker buildx build --push --tag $IMAGE_NAME --build-arg ITOP_URL=$DOWNLOAD_URL --build-arg PHP_VERSION=$PHP_VERSION $DIR_NAME
-          fi
+          docker buildx build --push --tag alxfrst/itop:$VERSION_TAG --build-arg ITOP_URL=$DOWNLOAD_URL --build-arg PHP_VERSION=$PHP_VERSION $DIR_NAME
         done
       shell: bash
 
