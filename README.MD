@@ -1,1 +1,1 @@
-Init 
+[![Build and Push iTop Docker Images](https://github.com/CPUBurners/itop-docker-autoimager/actions/workflows/buildImages.yaml/badge.svg)](https://github.com/CPUBurners/itop-docker-autoimager/actions/workflows/buildImages.yaml)
